@@ -4,11 +4,9 @@ import cors from "@fastify/cors"
 import { productsRoutes } from "./routes/productsRoutes";
 import { mercadopagoRoutes } from "./routes/mercadopagoRoutes";
 
-const PORT = Number(process.env.PORT)
-
 const app = fastify();
 app.register(cors)
 app.register(productsRoutes)
 app.register(mercadopagoRoutes)
 
-app.listen({port: PORT},() => {console.log(`server on`)});
+app.listen({port: 3333},() => {console.log(`server on`)});
