@@ -11,4 +11,4 @@ app.register(cors)
 app.register(productsRoutes)
 app.register(mercadopagoRoutes)
 
-app.listen({port: PORT},() => {console.log(`server on in port http://0.0.0.0:${PORT}`)});
+app.listen({port: PORT},() => {console.log(`server on`)});
