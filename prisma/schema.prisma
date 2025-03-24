@@ -12,13 +12,47 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-model Products{
+
+enum Roler {
+  ADMIN
+  USER
+}
+
+model Product{
   id String @id @unique @default(uuid())
-  nome String
-  descricao String
+  nome String @unique
   valor Float
   quantidade Int
+  descricao String
+  imagem String
   created_at DateTime @default(now())
   update_at DateTime @updatedAt
-  @@map("products")
+
+  @@map("product")
+}
+
+model User{
+  id Int @id @unique @default(autoincrement())
+  nome String
+  email String @unique
+  password String
+  roler Roler @default(USER)
+  @@map("user")
+}
+
+model Compra{
+  id Int @unique @default(autoincrement())
+  cpf String @unique
+  quantidade Int
+  total Decimal
+
+  @@map("compra")
+}
+
+model Endereco{
+  id Int @id @unique @default(autoincrement())
+  cep String
+  endereco String
+  complemento String
+  @@map("endereco")
 }
