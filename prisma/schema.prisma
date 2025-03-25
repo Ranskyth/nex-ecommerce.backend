@@ -18,41 +18,61 @@ enum Roler {
   USER
 }
 
-model Product{
-  id String @id @unique @default(uuid())
-  nome String @unique
-  valor Float
+enum Tamanho {
+  P
+  M
+  G
+  GG
+  GX
+}
+
+model Product {
+  id         String   @id @unique @default(uuid())
+  nome       String   @unique
+  valor      Float
   quantidade Int
-  descricao String
-  imagem String
+  descricao  String
+  imagem     String
+  tamanho Tamanho @default(M)
   created_at DateTime @default(now())
-  update_at DateTime @updatedAt
+  update_at  DateTime @updatedAt
 
   @@map("product")
 }
 
-model User{
-  id Int @id @unique @default(autoincrement())
-  nome String
-  email String @unique
+model User {
+  id       Int    @id @default(autoincrement())
+  nome     String
+  email    String @unique
   password String
-  roler Roler @default(USER)
+  roler    Roler  @default(USER)
+
+  endereco Endereco?
+  compra   Compra[]
+
   @@map("user")
 }
 
-model Compra{
-  id Int @unique @default(autoincrement())
-  cpf String @unique
+model Compra {
+  id         Int    @unique @default(autoincrement())
+  cpf        String @unique
   quantidade Int
-  total Decimal
+  total      Float
+
+  user_id Int  @unique
+  user    User @relation(fields: [user_id], references: [id])
 
   @@map("compra")
 }
 
-model Endereco{
-  id Int @id @unique @default(autoincrement())
-  cep String
-  endereco String
+model Endereco {
+  id          Int    @id @default(autoincrement())
+  cep         String
+  endereco    String
   complemento String
+
+  user_id Int  @unique
+  user    User @relation(fields: [user_id], references: [id])
+
   @@map("endereco")
 }
