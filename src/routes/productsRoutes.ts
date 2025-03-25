@@ -4,8 +4,7 @@ import { client } from "../prisma/client";
 import { createProduct } from "../controller/productController";
 
 export const productsRoutes = async (app: FastifyInstance) => {
-  app.get("/products", async (req, res) => {
-
+  app.get("/products", async (_, res) => {
     try{
       const db = await client.product.findMany();
 
@@ -14,6 +13,7 @@ export const productsRoutes = async (app: FastifyInstance) => {
     catch{
       res.status(500).send({msg: "Error"})
     }})
+
   app.get("/products/:id", async (req, res) => {
     const { id }:any = req.params;
 
@@ -22,4 +22,5 @@ export const productsRoutes = async (app: FastifyInstance) => {
     return res.status(200).send(db);
   });
   app.post("/products", createProduct)
+
 };
